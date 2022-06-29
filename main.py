@@ -32,6 +32,16 @@ def retornaEscolhaString():
     
     return op
 
+def retornaPath(municipio, projeto):
+    municipio = "BarraMansa" if (municipio == "Barra Mansa") "CasimiroDeAbreu" elif (municipio == "Casimiro de Abreu") else 
+
+    if projeto == "Tributos":
+        projeto_path = "Tributario".lower() if municipio != 'Oriximina' else "Tributario"
+    else:
+        projeto_path = projeto.lower() if municipio != 'Oriximina' else projeto.capitalize()
+    
+    return 'Xcopy D:\ProjetosEstudo\PY\\bat\ D:\ProjetosEstudo\PY\\bat\carros  /c /v /f /d /i /w'
+
 
 def insereTextoBat(texto):    
     arq = open("exec.bat", 'w+')
@@ -52,10 +62,15 @@ def main():
     # interface
     municipios = [
           "Barcarena"
-        , "Barra_Mansa"
-        , "Casimiro_de_Abreu"
-        , "Duque_de_Caxias"
+        , "BarraMansa"
+        , "CasimiroDeAbreu"
+        , "DuqueDeCaxias"
         , "Oriximina"
+    ]
+
+    projetos = [
+          "Tributos"
+        , "Portal"
     ]
 
     ambientes = [
@@ -70,16 +85,19 @@ def main():
         print(f'\nQue município deseja trabalhar?')
         operation = retornaEscolhaInt(municipios)
         municipio = municipios[operation]
-
+        
+        print(f'\nProjeto Tributario ou Portal?')
+        operation = retornaEscolhaInt(projetos)
+        projeto = projetos[operation]
         
         print(f'\nInterno ou Homologação?')
         operation = retornaEscolhaInt(ambientes)
         ambiente = ambientes[operation]
 
         
-        contexto = f'Município: {municipio}; Ambiente: {ambiente};'
+        contexto = f'Município: {municipio}; Projeto: {projeto}; Ambiente: {ambiente};'
         print(f'\n{contexto}')
-        texto = f"Xcopy D:\ProjetosEstudo\PY\\bat\{municipio}_{ambiente}\ D:\ProjetosEstudo\PY\\teste /c /v /f /d /i /w"
+        texto = retornaPath(municipio, projeto)
         print(f'\nDados de Cópia: {texto}')
         
         
@@ -90,6 +108,8 @@ def main():
     
     # manipulação de .bat
     insereTextoBat(texto)
+
+    print('Valor contido no arquivo .bat')
     leTextoBat()    
 
     # execução .bat
