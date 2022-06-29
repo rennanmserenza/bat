@@ -38,20 +38,23 @@ def retornaPath(municipio, projeto, ambiente):
     if(" " in municipio):
       municipio = municipio.replace(" ", "")
 
-    # Errado
     if projeto == "Tributos":
-        projeto = "Tributario".lower() if municipio != 'Oriximina' else "Tributario"
+        projeto_path = "Tributario".lower() if municipio != 'Oriximina' else "Tributario"
+    else:
+        projeto_path = projeto.lower() if municipio != 'Oriximina' else projeto.capitalize()
 
     # vai ter que usar esse caminho no principal
-    projeto_path = f'{municipio}\{projeto}\{ambiente}\\'
+    # str(f'xcopy "C:\\Users\\tributario\Desktop\Publicacoes\Tributario\Tributos_{municipio}\{projeto.upper()}\*" ' +
+    # f'"\\\\Nccgsrv07\sites_tributo\{municipio.upper()}\{projeto_path}\\" /E /Y /R /F')
 
+
+    # Provavelmente vai mudar toda essa parte pra ficar certo com os caminhos corretos 
+    projeto_path = f'{municipio}\{projeto}\{ambiente}\\'
     cwd = getcwd()
     print( f'Xcopy {cwd}\ProjetosEstudo {cwd}\ProjetosEstudo2\{projeto_path}  /c /v /f /d /i /w')
     return f'Xcopy {cwd}\ProjetosEstudo {cwd}\ProjetosEstudo2\{projeto_path}  /c /v /f /d /i /w'
     # TIPs: https://docs.microsoft.com/pt-br/windows-server/administration/windows-commands/xcopy
 
-    # str(f'xcopy "C:\\Users\\tributario\Desktop\Publicacoes\Tributario\Tributos_{municipio}\{projeto.upper()}\*" ' +
-    # f'"\\\\Nccgsrv07\sites_tributo\{municipio.upper()}\{projeto_path}\\" /E /Y /R /F')
 
 def insereTextoBat(texto):    
      with open("exec.bat", "w+") as arq:
