@@ -1,4 +1,4 @@
-from os import system as sys
+from os import getcwd, system as sys
 
 
 def retornaEscolhaInt(lista):
@@ -23,7 +23,7 @@ def retornaEscolhaString():
         try:
             op = input('Está correta a seleção[S/N]? ').upper().strip()[0]
 
-            if op.isnumeric() or op not in 'SN':
+            if op not in 'SN':
                 raise IndexError('Não te entendi, use apenas S e N.')
         except IndexError as e:
             print('Valor inválido:', e)
@@ -32,39 +32,45 @@ def retornaEscolhaString():
     
     return op
 
-def retornaPath(municipio, projeto):
-    municipio = "BarraMansa" if (municipio == "Barra Mansa") "CasimiroDeAbreu" elif (municipio == "Casimiro de Abreu") else 
+def retornaPath(municipio, projeto, ambiente):
+    # Se tiver espaco no nome do municipio, tira o espaco
+    # Substituir in por .Contains() do C# e replace por public string Replace(char Oldchar, char Newchar)
+    if(" " in municipio):
+      municipio = municipio.replace(" ", "")
 
+    # Errado
     if projeto == "Tributos":
-        projeto_path = "Tributario".lower() if municipio != 'Oriximina' else "Tributario"
-    else:
-        projeto_path = projeto.lower() if municipio != 'Oriximina' else projeto.capitalize()
-    
-    return 'Xcopy D:\ProjetosEstudo\PY\\bat\ D:\ProjetosEstudo\PY\\bat\carros  /c /v /f /d /i /w'
+        projeto = "Tributario".lower() if municipio != 'Oriximina' else "Tributario"
 
+    # vai ter que usar esse caminho no principal
+    projeto_path = f'{municipio}\{projeto}\{ambiente}\\'
+
+    cwd = getcwd()
+    print( f'Xcopy {cwd}\ProjetosEstudo {cwd}\ProjetosEstudo2\{projeto_path}  /c /v /f /d /i /w')
+    return f'Xcopy {cwd}\ProjetosEstudo {cwd}\ProjetosEstudo2\{projeto_path}  /c /v /f /d /i /w'
+    # TIPs: https://docs.microsoft.com/pt-br/windows-server/administration/windows-commands/xcopy
+
+    # str(f'xcopy "C:\\Users\\tributario\Desktop\Publicacoes\Tributario\Tributos_{municipio}\{projeto.upper()}\*" ' +
+    # f'"\\\\Nccgsrv07\sites_tributo\{municipio.upper()}\{projeto_path}\\" /E /Y /R /F')
 
 def insereTextoBat(texto):    
-    arq = open("exec.bat", 'w+')
-    arq.write(texto)
-    arq.close()
+     with open("exec.bat", "w+") as arq:
+      arq.write(texto)
 
 def leTextoBat():
-    arq = open("exec.bat")
-
+  with open("exec.bat") as arq:
     linhas = arq.readlines()
     for linha in linhas:
-        print(linha)
-        
-    arq.close()
-
+      print(linha)
+      
 
 def main():
     # interface
     municipios = [
           "Barcarena"
-        , "BarraMansa"
-        , "CasimiroDeAbreu"
-        , "DuqueDeCaxias"
+        , "Barra Mansa"
+        , "Casimiro De Abreu"
+        , "Duque De Caxias"
         , "Oriximina"
     ]
 
@@ -97,7 +103,7 @@ def main():
         
         contexto = f'Município: {municipio}; Projeto: {projeto}; Ambiente: {ambiente};'
         print(f'\n{contexto}')
-        texto = retornaPath(municipio, projeto)
+        texto = retornaPath(municipio, projeto, ambiente)
         print(f'\nDados de Cópia: {texto}')
         
         
