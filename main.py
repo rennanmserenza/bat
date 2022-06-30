@@ -36,7 +36,7 @@ def retornaPath(municipio, projeto, ambiente):
     # Se tiver espaco no nome do municipio, tira o espaco
     # Substituir in por .Contains() do C# e replace por public string Replace(char Oldchar, char Newchar)
     if(" " in municipio):
-      municipio = municipio.replace(" ", "")
+        municipio = municipio.replace(" ", "")
 
     if projeto == "Tributos":
         projeto_path = "Tributario".lower() if municipio != 'Oriximina' else "Tributario"
@@ -53,14 +53,15 @@ def retornaPath(municipio, projeto, ambiente):
 
 
 def insereTextoBat(texto):    
-     with open("exec.bat", "w+") as arq:
-      arq.write(texto)
+    with open("exec.bat", "w+") as arq:
+        arq.write(texto)
 
 def leTextoBat():
-  with open("exec.bat") as arq:
-    linhas = arq.readlines()
-    for linha in linhas:
-      print(linha)
+    with open("exec.bat") as arq:
+        linhas = arq.readlines()
+
+        for linha in linhas:
+            print(linha)
       
 
 def main():
