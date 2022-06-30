@@ -43,10 +43,6 @@ def retornaPath(municipio, projeto, ambiente):
     else:
         projeto_path = projeto.lower() if municipio != 'Oriximina' else projeto.capitalize()
 
-    # vai ter que usar esse caminho no principal
-    # str(f'xcopy "C:\\Users\\tributario\Desktop\Publicacoes\Tributario\Tributos_{municipio}\{projeto.upper()}\*" ' +
-    # f'"\\\\Nccgsrv07\sites_tributo\{municipio.upper()}\{projeto_path}\\" /E /Y /R /F')
-
 
     # Provavelmente vai mudar toda essa parte pra ficar certo com os caminhos corretos 
     projeto_path = f'{municipio}\{projeto}\{ambiente}\\'
